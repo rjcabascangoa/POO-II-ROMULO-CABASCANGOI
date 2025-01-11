@@ -1,0 +1,100 @@
+class Paciente:
+    def __init__(self, id_paciente, nombre, edad, motivo):
+        self.id_paciente = id_paciente
+        self.nombre = nombre
+        self.edad = edad
+        self.motivo = motivo
+
+    def __str__(self):
+        return f"ID: {self.id_paciente}, Nombre: {self.nombre}, Edad: {self.edad}, Motivo: {self.motivo}"
+
+
+class AgendaTurnos:
+    def __init__(self):
+        self.turnos = []
+
+    def agregar_turno(self):
+        try:
+            id_paciente = int(input("Ingrese el ID del paciente: "))
+            nombre = input("Ingrese el nombre del paciente: ")
+            edad = int(input("Ingrese la edad del paciente: "))
+            motivo = input("Ingrese el motivo del turno: ")
+            paciente = Paciente(id_paciente, nombre, edad, motivo)
+            self.turnos.append(paciente)
+            print(f"\nTurno agregado: {paciente.nombre}")
+        except ValueError:
+            print("Error: Por favor ingrese datos válidos.")
+
+    def listar_turnos(self):
+        print("\nListado de turnos:")
+        if not self.turnos:
+            print("No hay turnos registrados.")
+        else:
+            for turno in self.turnos:
+                print(turno)
+
+    def consultar_turno(self):
+        try:
+            id_paciente = int(input("Ingrese el ID del paciente a consultar: "))
+            for paciente in self.turnos:
+                if paciente.id_paciente == id_paciente:
+                    print("\nDetalles del turno:")
+                    print(paciente)
+                    return
+            print(f"\nNo se encontró un turno con ID {id_paciente}.")
+        except ValueError:
+            print("Error: Por favor ingrese un ID válido.")
+
+    def eliminar_turno(self):
+        try:
+            id_paciente = int(input("Ingrese el ID del paciente a eliminar: "))
+            for paciente in self.turnos:
+                if paciente.id_paciente == id_paciente:
+                    self.turnos.remove(paciente)
+                    print(f"\nTurno eliminado: {paciente.nombre}")
+                    return
+            print(f"\nNo se encontró un turno con ID {id_paciente}.")
+        except ValueError:
+            print("Error: Por favor ingrese un ID válido.")
+
+    def mostrar_turnos_antes_de_salir(self):
+        print("\nTurnos registrados al momento de salir:")
+        if not self.turnos:
+            print("No hay turnos registrados.")
+        else:
+            for turno in self.turnos:
+                print(turno)
+
+
+# Menú interactivo
+def menu():
+    agenda = AgendaTurnos()
+
+    while True:
+        print("\n--- Agenda de Turnos ---")
+        print("1. Agregar turno")
+        print("2. Listar turnos")
+        print("3. Consultar turno")
+        print("4. Eliminar turno")
+        print("5. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            agenda.agregar_turno()
+        elif opcion == "2":
+            agenda.listar_turnos()
+        elif opcion == "3":
+            agenda.consultar_turno()
+        elif opcion == "4":
+            agenda.eliminar_turno()
+        elif opcion == "5":
+            agenda.mostrar_turnos_antes_de_salir()
+            print("\nSaliendo del programa...")
+            break
+        else:
+            print("Opción no válida. Intente de nuevo.")
+
+
+# Ejecutar el menú
+menu()
